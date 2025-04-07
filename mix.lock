@@ -1,4 +1,5 @@
 %{
+  "briefly": {:hex, :briefly, "0.5.1", "ee10d48da7f79ed2aebdc3e536d5f9a0c3e36ff76c0ad0d4254653a152b13a8a", [:mix], [], "hexpm", "bd684aa92ad8b7b4e0d92c31200993c4bc1469fc68cd6d5f15144041bd15cb57"},
   "castore": {:hex, :castore, "1.0.12", "053f0e32700cbec356280c0e835df425a3be4bc1e0627b714330ad9d0f05497f", [:mix], [], "hexpm", "3dca286b2186055ba0c9449b4e95b97bf1b57b47c1f2644555879e659960c224"},
   "jason": {:hex, :jason, "1.4.4", "b9226785a9aa77b6857ca22832cffa5d5011a667207eb2a0ad56adb5db443b8a", [:mix], [{:decimal, "~> 1.0 or ~> 2.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm", "c5eb0cab91f094599f94d55bc63409236a8ec69a21a67814529e8d5f6cc90b3b"},
   "mdex": {:hex, :mdex, "0.5.0", "252c83cebc6a089801dfc1e142b4d98c9c358378ec7096a94796bce8bd13b0fc", [:mix], [{:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}, {:nimble_options, "~> 1.0", [hex: :nimble_options, repo: "hexpm", optional: false]}, {:rustler, "~> 0.32", [hex: :rustler, repo: "hexpm", optional: false]}, {:rustler_precompiled, "~> 0.7", [hex: :rustler_precompiled, repo: "hexpm", optional: false]}], "hexpm", "73e3ddee03130267e3be6aaf47a7f423c6f86add4bb5c62b352465cd9fb87d95"},
