@@ -15,6 +15,6 @@ defmodule Config do
 
   @spec read_config(file_path :: Path) :: Types.Config.t() | Error
   def read_config(_file_path) do
-    nil
+    raise Errors.ConfigError, message: "Default error"
   end
 end
