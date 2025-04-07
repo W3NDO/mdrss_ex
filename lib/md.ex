@@ -6,14 +6,17 @@ defmodule Md do
 
   @spec formatGuid(file :: Path.t()) :: String.t()
   def formatGuid(_file) do
+    ""
   end
 
   @spec valid_filename(file :: Path.t()) :: boolean()
   def valid_filename(_file) do
+    false
   end
 
   @spec check_markdown_title(title :: String.t()) :: boolean()
   def check_markdown_title(_title) do
+    false
   end
 
   @spec md_to_html(md_file :: Path.t()) :: String.t()

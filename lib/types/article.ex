@@ -6,7 +6,7 @@ defmodule Types.Article do
           filename: String.t(),
           date_published: DateTime.t(),
           description: String.t(),
-          topic: Topic.t() | nil
+          topic: Types.Topic.t() | nil
         }
 
   defstruct id: nil,
