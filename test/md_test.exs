@@ -67,5 +67,31 @@ defmodule MdTest do
       assert "<p>This is body text</p>" == article.description
       assert "Some title" == article.title
     end
+
+    @tag :skip
+    test "generate new article" do
+      {:ok, dir} = Briefly.create(type: :directory)
+
+      article = %Types.Article{
+        id: nil,
+        guid: nil,
+        title: nil,
+        filename: "article.md",
+        date_published: nil,
+        description: nil,
+        topic: "RSS"
+      }
+
+      config = %Types.Config{
+        description: nil,
+        input_folder: dir,
+        author: nil,
+        link: nil,
+        output_folder: nil,
+        output_file: nil
+      }
+
+
+    end
   end
 end

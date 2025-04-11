@@ -30,21 +30,14 @@ defmodule Md do
     end
   end
 
-  # @spec md_to_html(md_file :: Path.t()) :: String.t()
-  # def md_to_html(md_file) do
-  #   {:ok, data} = File.read(md_file)
-  #   {:ok, html} = MDEx.to_html(data)
-  #   html
-  # end
-
   @spec md_to_html(md_string :: String.t()) :: String.t()
   def md_to_html(md_string) do
     {:ok, html} = MDEx.to_html(md_string)
     html
   end
 
-  @spec parse_markdown(article :: %Types.Article{}, config :: %Types.Config{}) ::
-          %Types.Article{}
+  @spec parse_markdown(article :: Types.Article.t(), config :: Types.Config.t()) ::
+          Types.Article.t()
   def parse_markdown(article, config) do
     file_path = Path.join([config.input_folder, article.topic, article.filename])
 
@@ -69,8 +62,19 @@ defmodule Md do
   end
 
   @spec new_article(config :: Types.Config.t(), file :: Path.t(), topic :: Types.Topic.t()) ::
-          Types.Article.t()
-  def new_article(_config, _file, _topic) do
+          Types.Article.t() | {:error, Errors.MdError}
+  def new_article(config, file, topic) do
+    case File.stat(file) do
+      {:ok, file_info} ->
+        article = %Types.Article{
+          filename: file,
+          date_published: file_info.time,
+          guid: Enum.join([config.link, formatGuid(file)], "/"),
+          topic: topic
+        }
+        parse_markdown(article, config)
+      {:error, reason} -> {:error, Errors.MdError, message: reason}
+    end
   end
 
   @spec get_articles(feed :: Types.Feed.t(), topic :: Types.Topic.t()) ::
