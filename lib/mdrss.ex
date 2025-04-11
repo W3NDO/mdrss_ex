@@ -7,8 +7,12 @@ defmodule Mdrss do
   def ls(_config) do
   end
 
-  @spec update(config :: Types.Config.t()) :: Errors.FeedError | nil
-  def update(_config) do
+  @spec update(feed :: Types.Feed.t(), config :: Types.Config.t()) ::
+          Errors.FeedError | {:ok, String.t()} | {:error, Errors.XmlError}
+  def update(feed, config) do
+    feed
+    |> Md.from_config(config)
+    |> Xml.to_xml()
   end
 
   @spec parse(command :: String.t(), config :: Types.Config.t()) :: Errors.FeedError | nil

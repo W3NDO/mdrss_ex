@@ -27,7 +27,33 @@ defmodule Xml do
   def create_rss_feed(_feed, _topic) do
   end
 
-  @spec to_xml(feed :: Types.Feed.t()) :: {:ok, Sting.t()} | {:error, Errors.XmlError}
-  def to_xml(_feed) do
+  @spec to_xml(feed :: Types.Feed.t()) :: {:ok, String.t()} | {:error, Errors.XmlError}
+  def to_xml(feed) do
+    if String.length(feed.config.output_folder) > 0 do
+      for topic <- feed.topics do
+        rss_byte = create_rss_feed(feed, topic)
+        file_path = create_filename(feed.config, topic)
+
+        case File.write(file_path, rss_byte) do
+          :ok ->
+            {:ok, "Content written to #{file_path}"}
+
+          {:error, file_err} ->
+            {:error, Errors.XmlError, message: "Failed to write XML. #{inspect(file_err)}"}
+        end
+      end
+    else
+      rss_byte = create_rss_feed(feed, "")
+
+      case File.write(feed.config.output_file, rss_byte) do
+        :ok ->
+          {:ok, "Content written to #{feed.config.output_file}"}
+
+        {:error, file_err} ->
+          {:error, Errors.XmlError, message: "Failed to write XML. #{inspect(file_err)}"}
+      end
+    end
+
+    nil
   end
 end
