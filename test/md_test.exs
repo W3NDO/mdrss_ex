@@ -93,5 +93,68 @@ defmodule MdTest do
 
 
     end
+
+    @tag :skip
+    test "get all the articles" do
+      # create a temp directory to hold all the articles with sub directories by topic
+      {:ok, dir} = Briefly.create(type: :directory)
+
+      # create a sub-directory for the RSS topic
+      File.mkdir_p!(Path.join([dir, "RSS"]))
+
+      # Create 2 files in the RSS topic sub-dir
+      sub_dir_path = Path.join(dir, "RSS")
+      File.write!(Path.join(sub_dir_path, "article1.md"), "# Some title\nThis is body text")
+      File.write!(Path.join(sub_dir_path, "article2.md"), "# Some title\nThis is body text")
+
+
+      config = %Types.Config{
+        description: nil,
+        input_folder: dir,
+        author: nil,
+        link: nil,
+        output_folder: nil,
+        output_file: nil
+      }
+
+      # define feed
+      feed = %Types.Feed{
+        articles: nil,
+        config: config,
+        topics: nil
+      }
+
+      articles = [
+        %Types.Article{
+          id: nil,
+          guid: nil,
+          title: "Some title",
+          filename: "article1.md",
+          date_published: nil,
+          description: "<p>This is body text</p>",
+          topic: "RSS"
+        },
+        %Types.Article{
+          id: nil,
+          guid: nil,
+          title: "Some title",
+          filename: "article2.md",
+          date_published: nil,
+          description: "<p>This is body text</p>",
+          topic: "RSS"
+        }
+      ]
+
+      returned_articles = Md.get_articles(feed, "RSS")
+      Enum.each(returned_articles, fn article ->
+        assert true = Enum.member?(articles, article)
+      end)
+
+    end
+  end
+
+  @tag :skip
+  test "get topics in directory" do
+
   end
 end
