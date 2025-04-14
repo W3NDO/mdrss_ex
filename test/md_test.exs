@@ -2,6 +2,8 @@ defmodule MdTest do
   use ExUnit.Case
   doctest Md
 
+  # TODO add a set up for the directories to be used in the tests (https://hexdocs.pm/ex_unit/main/ExUnit.Callbacks.html#setup/1)
+
   describe "Testing a file parse" do
     test "Converts Markdown to HTML" do
       assert "<h1>This is a title</h1>" == Md.md_to_html("# This is a title")
@@ -68,7 +70,7 @@ defmodule MdTest do
       assert "Some title" == article.title
     end
 
-    @tag :skip
+    @tag :pending
     test "generate new article" do
       {:ok, dir} = Briefly.create(type: :directory)
 
@@ -94,7 +96,7 @@ defmodule MdTest do
 
     end
 
-    @tag :skip
+    @tag :pending
     test "get all the articles" do
       # create a temp directory to hold all the articles with sub directories by topic
       {:ok, dir} = Briefly.create(type: :directory)
@@ -153,8 +155,14 @@ defmodule MdTest do
     end
   end
 
-  @tag :skip
+  @tag :pending
   test "get topics in directory" do
+
+  end
+
+  @tag :pending
+  test "from config" do # not sure what this function actually does
+
 
   end
 end
