@@ -66,20 +66,24 @@ defmodule Md do
   def new_article(config, file, topic) do
     case File.stat(file) do
       {:ok, file_info} ->
-        article = %Types.Article{
+        %Types.Article{
           filename: file,
           date_published: file_info.time,
           guid: Enum.join([config.link, formatGuid(file)], "/"),
           topic: topic
         }
-        parse_markdown(article, config)
-      {:error, reason} -> {:error, Errors.MdError, message: reason}
+        |> parse_markdown(config)
+
+      {:error, reason} ->
+        {:error, Errors.MdError, message: reason}
     end
   end
 
   @spec get_articles(feed :: Types.Feed.t(), topic :: Types.Topic.t()) ::
           {list(Types.Article.t()), Errors.FeedError | nil}
   def get_articles(_feed, _topic) do
+    articles = []
+
   end
 
   @spec get_topics(feed :: Types.Feed.t()) :: Errors.FeedError | nil

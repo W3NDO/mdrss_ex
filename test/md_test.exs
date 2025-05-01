@@ -3,6 +3,12 @@ defmodule MdTest do
   doctest Md
 
   # TODO add a set up for the directories to be used in the tests (https://hexdocs.pm/ex_unit/main/ExUnit.Callbacks.html#setup/1)
+  # setup :dir_setup
+
+  # defp dir_setup(context) do
+  #   {:ok, dir} = Briefly.create(type: :directory)
+  #   {:ok, dir: dir}
+  # end
 
   describe "Testing a file parse" do
     test "Converts Markdown to HTML" do
@@ -70,7 +76,6 @@ defmodule MdTest do
       assert "Some title" == article.title
     end
 
-    @tag :pending
     test "generate new article" do
       {:ok, dir} = Briefly.create(type: :directory)
 
@@ -93,10 +98,17 @@ defmodule MdTest do
         output_file: nil
       }
 
+      topic = %Types.Topic{
+        data: ["test_article"]
+      }
+
+      test_path = Path.join(dir, "article.md")
+      file = File.write!(test_path, "# Some title\nThis is body text")
+      assert %Types.Article{} == Md.new_article(config, file, topic)
 
     end
 
-    @tag :pending
+    # @tag :pending
     test "get all the articles" do
       # create a temp directory to hold all the articles with sub directories by topic
       {:ok, dir} = Briefly.create(type: :directory)
@@ -108,7 +120,6 @@ defmodule MdTest do
       sub_dir_path = Path.join(dir, "RSS")
       File.write!(Path.join(sub_dir_path, "article1.md"), "# Some title\nThis is body text")
       File.write!(Path.join(sub_dir_path, "article2.md"), "# Some title\nThis is body text")
-
 
       config = %Types.Config{
         description: nil,
@@ -149,20 +160,17 @@ defmodule MdTest do
 
       returned_articles = Md.get_articles(feed, "RSS")
       Enum.each(returned_articles, fn article ->
-        assert true = Enum.member?(articles, article)
+        assert true == Enum.member?(articles, article)
       end)
-
     end
   end
 
   @tag :pending
   test "get topics in directory" do
-
   end
 
   @tag :pending
-  test "from config" do # not sure what this function actually does
-
-
+  # not sure what this function actually does
+  test "from config" do
   end
 end
